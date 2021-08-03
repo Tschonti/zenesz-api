@@ -1,19 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+import requests
+from rest_framework.response import Response
+from django.contrib.postgres.search import SearchQuery
 
-from .models import Greeting
+from rest_framework import viewsets
 
-# Create your views here.
-def index(request):
-    # return HttpResponse('Hello from Python!')
-    return render(request, "index.html")
+from .serializers import SongSerializer
+from .models import Song
 
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
-def db(request):
+class SongViewSet(viewsets.ModelViewSet):
+    queryset = Song.objects.all().order_by('id')
+    serializer_class = SongSerializer
 
-    greeting = Greeting()
-    greeting.save()
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def searchTitle(request, term):
+    songs = Song.objects.filter(title__search=term)
+    return Response(SongSerializer(songs, many=True).data)
 
-    greetings = Greeting.objects.all()
-
-    return render(request, "db.html", {"greetings": greetings})
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def searchLyrics(request, term):
+    songs = Song.objects.filter(lyrics__search=term)
+    return Response(SongSerializer(songs, many=True).data)
