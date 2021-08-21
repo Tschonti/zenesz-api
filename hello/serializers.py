@@ -6,6 +6,7 @@ class SongSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField(max_length=256)
     lyrics = serializers.CharField(max_length=5000, trim_whitespace=False)
+    desc = serializers.CharField(max_length=5000)
     verses = serializers.ListField(
         child=serializers.CharField(max_length=5000), allow_empty=True, required=False
     )
@@ -16,6 +17,7 @@ class SongSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.lyrics = validated_data.get('lyrics', instance.lyrics)
+        instance.desc = validated_data.get('desc', instance.desc)
 
         instance.save()
         return instance
