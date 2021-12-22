@@ -18,12 +18,18 @@ class SongViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def searchTitle(request, term):
-    songs = Song.objects.filter(title__search=term)
+def searchTitle(request, term, color):
+    if color:
+        songs = Song.objects.filter(title__search=term).filter(color=color)
+    else:
+        songs = Song.objects.filter(title__search=term)
     return Response(SongSerializer(songs, many=True).data)
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def searchLyrics(request, term):
-    songs = Song.objects.filter(lyrics__search=term)
+def searchLyrics(request, term, color):
+    if color:
+        songs = Song.objects.filter(lyrics__search=term).filter(color=color)
+    else:
+        songs = Song.objects.filter(lyrics__search=term)
     return Response(SongSerializer(songs, many=True).data)
