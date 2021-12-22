@@ -30,7 +30,7 @@ def searchTitle(request, term, color):
 @renderer_classes([JSONRenderer])
 def searchLyrics(request, term, color):
     songs = ''
-    if term == '?noval?':
+    if term == '---noval---':
         songs = Song.objects.filter(color__iexact=color)
     elif color:
         songs = Song.objects.filter(lyrics__search=term).filter(color__iexact=color)
