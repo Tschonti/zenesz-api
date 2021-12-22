@@ -19,6 +19,7 @@ class SongViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def searchTitle(request, term, color):
+    songs = ''
     if color:
         songs = Song.objects.filter(title__search=term).filter(color=color)
     else:
