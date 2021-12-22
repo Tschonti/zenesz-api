@@ -10,6 +10,6 @@ router.register(r'songs', views.SongViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('search-title/?t=<term>&c=<color>/', views.searchTitle),
-    path('search-lyrics/?t=<term>&c=<color>/', views.searchLyrics)
+    path('search-title/<term>/<color>/', views.searchTitle),
+    path('search-lyrics/<term>/<color>/', views.searchLyrics)
 ]

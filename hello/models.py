@@ -7,4 +7,4 @@ class Song(models.Model):
     lyrics = models.CharField(max_length=5000)
     desc = models.CharField(max_length=5000, blank=True, default='')
     verses = models.CharField(max_length=5000, blank=True, default='')
-    color = models.CharField(max_length=7, blank=True, default='')
+    color = models.CharField(max_length=6, blank=True, default='')

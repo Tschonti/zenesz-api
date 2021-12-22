@@ -7,7 +7,7 @@ class SongSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=256)
     lyrics = serializers.CharField(max_length=5000, trim_whitespace=False)
     desc = serializers.CharField(max_length=5000, required=False, allow_blank=True)
-    color = serializers.CharField(max_length=7, required=False, allow_blank=True)
+    color = serializers.CharField(max_length=6, required=False, allow_blank=True)
     verses = serializers.ListField(
         child=serializers.CharField(max_length=5000), allow_empty=True, required=False
     )
