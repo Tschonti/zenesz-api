@@ -21,7 +21,7 @@ class SongViewSet(viewsets.ModelViewSet):
 def searchTitle(request, term, color):
     songs = ''
     if color:
-        songs = Song.objects.filter(title__search=term).filter(color=color)
+        songs = Song.objects.filter(title__search=term).filter(color__iexact=color)
     else:
         songs = Song.objects.filter(title__search=term)
     return Response(SongSerializer(songs, many=True).data)
@@ -31,7 +31,7 @@ def searchTitle(request, term, color):
 def searchLyrics(request, term, color):
     songs = ''
     if color:
-        songs = Song.objects.filter(lyrics__search=term).filter(color=color)
+        songs = Song.objects.filter(lyrics__search=term).filter(color__iexact=color)
     else:
         songs = Song.objects.filter(lyrics__search=term)
     return Response(SongSerializer(songs, many=True).data)
