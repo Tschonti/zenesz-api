@@ -11,5 +11,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('search-title/<term>/<color>/', views.searchTitle),
-    path('search-lyrics/<term>/<color>/', views.searchLyrics)
+    path('search-title/<term>/', views.searchTitle),
+    path('search-lyrics/<term>/<color>/', views.searchLyrics),
+    path('search-lyrics/<term>/', views.searchLyrics)
 ]
