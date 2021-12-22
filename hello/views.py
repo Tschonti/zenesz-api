@@ -28,6 +28,7 @@ def searchTitle(request, term, color):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def searchLyrics(request, term, color):
+    songs = ''
     if color:
         songs = Song.objects.filter(lyrics__search=term).filter(color=color)
     else:
