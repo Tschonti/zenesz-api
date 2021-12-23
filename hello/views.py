@@ -32,7 +32,7 @@ def searchLyrics(request, term, color=''):
     songs = ''
     if term == '---noval---':
         songs = Song.objects.filter(color__iexact=color)
-    elif color:
+    elif color != '---noval---':
         songs = Song.objects.filter(lyrics__search=term).filter(color__iexact=color)
     else:
         songs = Song.objects.filter(lyrics__search=term)
