@@ -18,9 +18,11 @@ class SongViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def searchTitle(request, term, color):
+def searchTitle(request, term, color=''):
     songs = ''
-    if color:
+    if term == '---noval---':
+        songs = Song.objects.filter(color__iexact=color)
+    elif color:
         songs = Song.objects.filter(title__search=term).filter(color__iexact=color)
     else:
         songs = Song.objects.filter(title__search=term)
@@ -28,11 +30,11 @@ def searchTitle(request, term, color):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def searchLyrics(request, term, color):
+def searchLyrics(request, term, color=''):
     songs = ''
     if term == '---noval---':
         songs = Song.objects.filter(color__iexact=color)
-    elif color != '---noval---':
+    elif color:
         songs = Song.objects.filter(lyrics__search=term).filter(color__iexact=color)
     else:
         songs = Song.objects.filter(lyrics__search=term)
