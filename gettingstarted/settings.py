@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import django_heroku
 import dj_database_url
 
 
@@ -28,7 +27,7 @@ SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be us
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["api.zenesz.okgy.hu"]
 
 
 # Application definition
@@ -40,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.postgres",
+    #"django.contrib.postgres",
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -60,10 +59,12 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    #"http://localhost:3000",
-    #"http://192.168.0.3:3000",
-    #"http://localhost:5001",
-    "https://okgy.hu"
+    "http://localhost:3000",
+    "http://192.168.0.3:3000",
+    "http://localhost:5001",
+    "https://zenesz.okgy.hu",
+] if os.getenv("ALLOW_LOCAL", 'False').lower() in ('true', '1', 't') else [
+    "https://zenesz.okgy.hu",
 ]
 
 ROOT_URLCONF = "gettingstarted.urls"
@@ -92,11 +93,17 @@ WSGI_APPLICATION = "gettingstarted.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE" : "django.db.backends.postgresql",
+        "ENGINE" : "mysql.connector.django",
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PWD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT'],
+        'OPTIONS': {
+          'autocommit': True,
+        },
     }
 }
-
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 
 # Password validation
